@@ -1,61 +1,53 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+1.- git clone del proyecto
 
-## About Laravel
+2.- composer install
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+3.- php artisan key:generate
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+4.- php artisan migrate
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+5.- crea base de datos vip2car e ejecutar los siguientes inserts de la encuesta basica;
 
-## Learning Laravel
+create database vip2car;
+use vip2car;
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+INSERT INTO questions (survey_id, question_text, type, created_at, updated_at)
+VALUES
+(1, '¿Cómo calificaría la calidad del servicio recibido?', 'multiple_choice', NOW(), NOW()),
+(1, '¿El tiempo de entrega de su vehículo fue adecuado?', 'multiple_choice', NOW(), NOW()),
+(1, '¿Recomendaría nuestro taller a otras personas?', 'multiple_choice', NOW(), NOW()),
+(1, '¿Qué aspectos considera que podríamos mejorar?', 'text', NOW(), NOW());
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-- Opciones para pregunta 1 (id 1)
+INSERT INTO choices (question_id, choice_text, created_at, updated_at)
+VALUES
+(1, 'Excelente', NOW(), NOW()),
+(1, 'Bueno', NOW(), NOW()),
+(1, 'Regular', NOW(), NOW()),
+(1, 'Malo', NOW(), NOW());
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+-- Opciones para pregunta 2 (id 2)
+INSERT INTO choices (question_id, choice_text, created_at, updated_at)
+VALUES
+(2, 'Sí, fue rápido', NOW(), NOW()),
+(2, 'Aceptable', NOW(), NOW()),
+(2, 'Tardó más de lo esperado', NOW(), NOW());
 
-## Laravel Sponsors
+-- Opciones para pregunta 3 (id 3)
+INSERT INTO choices (question_id, choice_text, created_at, updated_at)
+VALUES
+(3, 'Definitivamente sí', NOW(), NOW()),
+(3, 'Tal vez', NOW(), NOW()),
+(3, 'No lo recomendaría', NOW(), NOW());
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+INSERT INTO responses (survey_id, submitted_at)
+VALUES (1, NOW());
 
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+-- Para respuesta_id 1 (asociado a la respuesta creada arriba)
+-- Contestando las preguntas de opción múltiple
+INSERT INTO answers (response_id, question_id, choice_id, answer_text, created_at, updated_at)
+VALUES
+(1, 1, 1, NULL, NOW(), NOW()), -- Excelente en calidad del servicio
+(1, 2, 2, NULL, NOW(), NOW()), -- Aceptable en tiempo de entrega
+(1, 3, 1, NULL, NOW(), NOW()); -- Definitivamente sí recomendaría
